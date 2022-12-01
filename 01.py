@@ -13,8 +13,11 @@ with open('01-input.txt') as f:
 			totals.append(running_total)
 			running_total = 0
 
-print(max(totals))
+print("Most:\t", max(totals))
 
+sorted = sorted(totals, reverse=True)
 
+top_three = sorted[0:3]
 
+print("Top three:\t", sum(top_three))
 
