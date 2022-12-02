@@ -16,6 +16,7 @@
 #   Win     6
 
 total = 0
+planned = 0
 
 def score_round(opponent, player):
     if opponent == 'a': # Rock
@@ -55,7 +56,46 @@ def get_value(letter):
         return 2
     elif letter == 'z':
         return 3
+        
+def get_win(letter):
+    if letter == 'a':
+        return 'y'
+    elif letter == 'b':
+        return 'z'
+    elif letter == 'c':
+        return 'x'
+
+def get_lose(letter):
+    if letter == 'a':
+        return 'z'
+    elif letter == 'b':
+        return 'x'
+    elif letter == 'c':
+        return 'y'
+        
+def get_draw(letter):
+    if letter == 'a':
+        return 'x'
+    elif letter == 'b':
+        return 'y'
+    elif letter == 'c':
+        return 'z'
+
+def choose_response(opponent, wld):
+    wld_value = 0
+    letter = '0'
     
+    if wld == 'x':
+        wld_value = 0
+        letter = get_lose(opponent)
+    elif wld == 'y':
+        wld_value = 3
+        letter = get_draw(opponent)
+    elif wld == 'z':
+        wld_value = 6
+        letter = get_win(opponent)
+        
+    return wld_value + get_value(letter)
 
 with open('02-input.txt') as f:
     lines = f.readlines()
@@ -65,5 +105,7 @@ with open('02-input.txt') as f:
         win_outcome = score_round(opponent, player)
         play_value = get_value(player)
         total += win_outcome + play_value
+        planned += choose_response(opponent, player)
 
 print(f"Value: {total}")
+print(f"Planned: {planned}")
